@@ -14,11 +14,21 @@ namespace Infrastructure
         string CreatePasswordHash(string password, string email, string salt);
     }
 
-    internal sealed class CryptoService : ICryptoService
+    public sealed class CryptoService : ICryptoService
     {
         public const int DEFAULT_SALT_SIZE = 12;
 
         private static readonly RNGCryptoServiceProvider _random = new RNGCryptoServiceProvider();
+
+        private static readonly ICryptoService _instance = new CryptoService();
+
+        public static ICryptoService Instance { get { return _instance; } }
+
+        static CryptoService() { }
+
+        private CryptoService() { }
+
+        #region ICryptoService Members
 
         public string CreateSalt()
         {
@@ -41,5 +51,7 @@ namespace Infrastructure
             return FormsAuthentication.HashPasswordForStoringInConfigFile(saltedPassword,
                 FormsAuthPasswordFormat.SHA1.ToString());
         }
+
+        #endregion
     }
 }
