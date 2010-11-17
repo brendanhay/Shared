@@ -72,7 +72,6 @@
     <Compile Include="Conventions\HasManyConvention.cs" />
     <Compile Include="Conventions\HasManyToManyConvention.cs" />
     <Compile Include="Conventions\IdConvention.cs" />
-    <Compile Include="NHibernateBootstrapper.cs" />
     <Compile Include="NHibernateUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NHibernateRepository.cs" />

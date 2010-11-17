@@ -1,7 +1,7 @@
 ﻿using System;
+using Infrastructure.Audits;
 using NHibernate.Event;
 using NHibernate.Persister.Entity;
-using Infrastructure.Audits;
 
 namespace Data.NHibernate
 {

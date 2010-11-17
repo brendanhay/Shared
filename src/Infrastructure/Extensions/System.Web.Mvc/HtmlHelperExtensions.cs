@@ -1,5 +1,5 @@
-﻿using Infrastructure.Constants;
-using System.Linq;
+﻿using System.Linq;
+using Infrastructure.Constants;
 using Infrastructure.Extensions;
 
 namespace System.Web.Mvc

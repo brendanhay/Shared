@@ -1,6 +1,6 @@
-﻿using MongoDB;
-using Infrastructure;
+﻿using Infrastructure;
 using Infrastructure.Data;
+using MongoDB;
 
 namespace Data.MongoDb
 {
@@ -14,15 +14,9 @@ namespace Data.MongoDb
             _mongo.Connect();
         }
 
-        #region IUnitOfWork
-
         public void Commit() { }
 
         public void Rollback() { }
-
-        #endregion
-
-        #region IDisposable
 
         public void Dispose()
         {
@@ -30,15 +24,9 @@ namespace Data.MongoDb
             _mongo.Dispose();
         }
 
-        #endregion
-
-        #region IRepositoryFactory
-
         public IRepository<T> Repository<T>() where T : class
         {
             return new MongoRepository<T>(_mongo.GetDatabase("test"));
         }
-
-        #endregion
     }
 }

@@ -66,13 +66,9 @@ namespace Data
             }
         }
 
-        #region IDisposable
-
         public void Dispose()
         {
             Rollback(true);
         }
-
-        #endregion
     }
 }

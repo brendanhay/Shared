@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MongoBootstrapper.cs" />
     <Compile Include="MongoRepository.cs" />
     <Compile Include="MongoUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,7 +10,7 @@ namespace Data
     {
         private readonly IDictionary<DatastoreType, IUnitOfWorkFactory> _factories;
 
-        public UnitOfWorkFactoryProxy(IEnumerable<IUnitOfWorkFactory> factories)
+        public UnitOfWorkFactoryProxy(params IUnitOfWorkFactory[] factories)
         {
             _factories = factories.ToDictionary(factory => factory.Datastore, factory => factory);
 
