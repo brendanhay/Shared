@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Infrastructure;
+using Infrastructure.Data;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using Data.NHibernate;
-using Infrastructure;
-using Infrastructure.Data;
 
 namespace Data.NHibernate
 {
@@ -30,16 +29,16 @@ namespace Data.NHibernate
             return new NHibernateUnitOfWork(_sessionFactory);
         }
 
+#if DEBUG
         void IUnitOfWorkFactory.Rebuild()
         {
-#if DEBUG
             var configuration = Configure();
             var schema = new SchemaExport(configuration);
 
             schema.Drop(false, true);
             schema.Create(false, true);
-#endif
         }
+#endif
 
         internal Configuration Configure()
         {

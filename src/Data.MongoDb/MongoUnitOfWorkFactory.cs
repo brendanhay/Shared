@@ -1,8 +1,7 @@
-﻿using MongoDB;
-using MongoDB.Configuration;
-using Data.MongoDb;
-using Infrastructure;
+﻿using Infrastructure;
 using Infrastructure.Data;
+using MongoDB;
+using MongoDB.Configuration;
 
 namespace Data.MongoDb
 {
@@ -28,9 +27,9 @@ namespace Data.MongoDb
             return new MongoUnitOfWork(_mongo);
         }
 
+#if DEBUG
         void IUnitOfWorkFactory.Rebuild()
         {
-#if DEBUG
             _mongo.Connect();
 
             var selector = new Document();
@@ -40,7 +39,7 @@ namespace Data.MongoDb
                     database.GetCollection(collection).Remove(selector);
                 }
             }
-#endif
         }
+#endif
     }
 }
