@@ -5,6 +5,7 @@ using System.Reflection;
 using Data.Configuration;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
 
 namespace Data
 {
@@ -17,7 +18,7 @@ namespace Data
 
         internal static void Setup(IServiceLocator locator, ProviderConfiguration config)
         {
-            foreach (DatastoreConfiguration datastore in config.Datastores) {
+            foreach (Datastore datastore in config.Datastores) {
                 RegisterFactory(locator, datastore);
             }
 
@@ -25,7 +26,7 @@ namespace Data
         }
 
         private static void RegisterFactory(IServiceLocator locator,
-            DatastoreConfiguration datastore)
+            Datastore datastore)
         {
             var type = Type.GetType(datastore.UnitOfWorkFactory, LoadAssembly,
                 (assembly, name, insensitive) => assembly.GetType(name, true, insensitive));
@@ -37,7 +38,7 @@ namespace Data
             }
         }
 
-        private static IUnitOfWorkFactory LoadFactory(Type type, DatastoreConfiguration datastore)
+        private static IUnitOfWorkFactory LoadFactory(Type type, Datastore datastore)
         {
             var mappings = LoadMappings(datastore.Mappings);
             var ctor = type.GetConstructors().FirstOrDefault();
@@ -51,6 +52,10 @@ namespace Data
                 : new object[] { datastore.Connection, mappings };
 
             var instance = ctor.Invoke(parameters) as IUnitOfWorkFactory;
+
+            if (instance == null) {
+                throw new InvalidCastException(datastore.UnitOfWorkFactory + " is not a valid IUnitOfWorkFactory.");
+            }
 
             return instance;
         }
@@ -74,9 +79,7 @@ namespace Data
         private static Assembly LoadAssembly(string assemblyName)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var index = assembly.CodeBase.LastIndexOf('/');
-            var location = assembly.CodeBase.Remove(index).Replace("file:///", "");
-            var path = Path.Combine(location, assemblyName + ".dll");
+            var path = Path.Combine(assembly.CodeBaseDirectory(), assemblyName + ".dll");
 
             return Assembly.LoadFile(path);
         }

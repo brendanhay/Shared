@@ -2,7 +2,7 @@
 
 namespace Data.Configuration
 {
-    internal sealed class DatastoreConfiguration : ConfigurationElement
+    internal sealed class Datastore : ConfigurationElement
     {
         [ConfigurationProperty("unitOfWorkFactory", IsRequired = true)]
         public string UnitOfWorkFactory

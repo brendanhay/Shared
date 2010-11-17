@@ -65,7 +65,7 @@
     <Compile Include="Collections\NumericPagedList.cs" />
     <Compile Include="CompilerService.cs" />
     <Compile Include="Constants\Css.cs" />
-    <Compile Include="Cryptography\CryptoHelper.cs" />
+    <Compile Include="CryptoService.cs" />
     <Compile Include="Data\DatastoreType.cs" />
     <Compile Include="Data\DatastoreAttribute.cs" />
     <Compile Include="Entity.cs" />
@@ -86,13 +86,6 @@
     <Compile Include="Inflector.cs" />
     <Compile Include="InfrastructureBootstrapper.cs" />
     <Compile Include="Collections\InterceptedList.cs" />
-    <Compile Include="Razor\CSharpRazorProvider.cs" />
-    <Compile Include="Razor\IRazorProvider.cs" />
-    <Compile Include="Razor\ITemplate.cs" />
-    <Compile Include="Razor\RazorEngine.cs" />
-    <Compile Include="Razor\RazorCompiler.cs" />
-    <Compile Include="Razor\TemplateBase.cs" />
-    <Compile Include="Razor\TemplateException.cs" />
     <Compile Include="ServiceLocatorControllerFactory.cs" />
     <Compile Include="Data\IRepositoryFactory.cs" />
     <Compile Include="Data\IUnitOfWorkFactory.cs" />

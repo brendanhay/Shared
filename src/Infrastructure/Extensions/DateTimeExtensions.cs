@@ -34,5 +34,10 @@ namespace Infrastructure.Extensions
 
             return result + suffix;
         }
+
+        public static string ToTimeStamp(this DateTime self)
+        {
+            return self.ToString("yyyyMMddHHmmssffff");
+        }
     }
 }

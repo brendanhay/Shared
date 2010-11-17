@@ -5,18 +5,27 @@ using System.Web.Security;
 
 namespace Infrastructure
 {
-    public static class CryptoHelper
+    public interface ICryptoService
+    {
+        string CreateSalt();
+
+        string CreateSalt(int size);
+
+        string CreatePasswordHash(string password, string email, string salt);
+    }
+
+    internal sealed class CryptoService : ICryptoService
     {
         public const int DEFAULT_SALT_SIZE = 12;
 
         private static readonly RNGCryptoServiceProvider _random = new RNGCryptoServiceProvider();
 
-        public static string CreateSalt()
+        public string CreateSalt()
         {
             return CreateSalt(DEFAULT_SALT_SIZE);
         }
 
-        public static string CreateSalt(int size)
+        public string CreateSalt(int size)
         {
             var buffer = new byte[size];
 
@@ -25,7 +34,7 @@ namespace Infrastructure
             return Convert.ToBase64String(buffer);
         }
 
-        public static string CreatePasswordHash(string password, string email, string salt)
+        public string CreatePasswordHash(string password, string email, string salt)
         {
             var saltedPassword = string.Join("", salt, password, email);
 

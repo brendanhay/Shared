@@ -28,5 +28,12 @@ namespace Infrastructure.Extensions
                 }
             }
         }
+
+        public static string CodeBaseDirectory(this Assembly self)
+        {
+            var index = self.CodeBase.LastIndexOf('/');
+
+            return self.CodeBase.Remove(index).Replace("file:///", "");
+        }
     }
 }

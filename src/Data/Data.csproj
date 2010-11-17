@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBootstrapper.cs" />
-    <Compile Include="Configuration\DatastoreConfiguration.cs" />
-    <Compile Include="Configuration\DatastoreConfigurationCollection.cs" />
+    <Compile Include="Configuration\Datastore.cs" />
+    <Compile Include="Configuration\DatastoreCollection.cs" />
     <Compile Include="Configuration\ProviderConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWorkProxy.cs" />

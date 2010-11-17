@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Infrastructure.Extensions;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -57,8 +60,18 @@ namespace Data.NHibernate
             var configuration = Configure();
             var schema = new SchemaExport(configuration);
 
+            schema.SetOutputFile(GetSchemaFileName());
+
             schema.Drop(false, true);
-            schema.Create(false, true);
+            schema.Create(true, true);
+        }
+
+        private static string GetSchemaFileName()
+        {
+            var current = Assembly.GetExecutingAssembly().CodeBaseDirectory();
+            var parent = Path.GetDirectoryName(current) ?? "";
+
+            return Path.Combine(parent, "data", "nhibernate", DateTime.Now.ToTimeStamp() + ".sql");
         }
     }
 }

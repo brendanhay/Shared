@@ -4,7 +4,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Infrastructure.Razor;
+using System.Text;
 using Microsoft.CSharp;
 
 namespace Infrastructure
@@ -65,7 +65,14 @@ namespace Infrastructure
             var results = codeProvider.CompileAssemblyFromDom(parameters, unit);
 
             if (results.Errors.HasErrors) {
-                throw new TemplateException(results.Errors);
+                var builder = new StringBuilder();
+
+                foreach (CompilerError error in results.Errors) {
+                    builder.AppendFormat("Line: {0}, Column: {1} - {2}{3}",
+                        error.Line, error.Column, error.ErrorText, Environment.NewLine);
+                }
+
+                throw new InvalidDataException(builder.ToString());
             }
 
             var types = results.CompiledAssembly.GetExportedTypes();

@@ -24,7 +24,7 @@ namespace Infrastructure.Extensions
             var type = source.GetType();
 
             while (type != null) {
-                UpdateForType(type, source, destination);
+                SetFields(type, source, destination);
 
                 type = depth > 0 ? type.BaseType : null;
 
@@ -32,13 +32,13 @@ namespace Infrastructure.Extensions
             }
         }
 
-        private static void UpdateForType(this Type type, object source, object destination)
+        private static void SetFields(this Type type, object source, object destination)
         {
             var fields = type.GetFields(BindingFlags.NonPublic
                 | BindingFlags.Public | BindingFlags.Instance);
 
-            foreach (var fi in fields) {
-                fi.SetValue(destination, fi.GetValue(source));
+            foreach (var field in fields) {
+                field.SetValue(destination, field.GetValue(source));
             }
         }
     }
