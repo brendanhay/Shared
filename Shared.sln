@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{9A44632E-996F-461F-8CA3-451D0384D7DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "src\Data\Data.csproj", "{554A13AE-F10F-4392-AF86-C4320C5E2C6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.MongoDb", "src\Data.MongoDb\Data.MongoDb.csproj", "{043A36F6-C72B-46B6-B5B2-1325E448A5D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.NHibernate", "src\Data.NHibernate\Data.NHibernate.csproj", "{A5179B7F-95DA-47B3-A8CD-BEDE6A13159F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A44632E-996F-461F-8CA3-451D0384D7DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A44632E-996F-461F-8CA3-451D0384D7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A44632E-996F-461F-8CA3-451D0384D7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A44632E-996F-461F-8CA3-451D0384D7DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{554A13AE-F10F-4392-AF86-C4320C5E2C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{554A13AE-F10F-4392-AF86-C4320C5E2C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{554A13AE-F10F-4392-AF86-C4320C5E2C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{554A13AE-F10F-4392-AF86-C4320C5E2C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{043A36F6-C72B-46B6-B5B2-1325E448A5D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{043A36F6-C72B-46B6-B5B2-1325E448A5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{043A36F6-C72B-46B6-B5B2-1325E448A5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{043A36F6-C72B-46B6-B5B2-1325E448A5D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5179B7F-95DA-47B3-A8CD-BEDE6A13159F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5179B7F-95DA-47B3-A8CD-BEDE6A13159F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5179B7F-95DA-47B3-A8CD-BEDE6A13159F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5179B7F-95DA-47B3-A8CD-BEDE6A13159F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
