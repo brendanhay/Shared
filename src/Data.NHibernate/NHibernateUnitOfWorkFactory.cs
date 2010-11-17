@@ -15,7 +15,7 @@ namespace Data.NHibernate
         private readonly Assembly _mappings;
         private readonly string _connection;
 
-        public NHibernateUnitOfWorkFactory(Assembly mappings, string connection)
+        public NHibernateUnitOfWorkFactory(string connection, Assembly mappings)
         {
             _mappings = mappings;
             _connection = connection;

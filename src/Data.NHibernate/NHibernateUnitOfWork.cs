@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
-using NHibernate;
 using Infrastructure;
 using Infrastructure.Data;
+using NHibernate;
 
 namespace Data.NHibernate
 {

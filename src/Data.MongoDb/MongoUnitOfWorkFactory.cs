@@ -1,10 +1,13 @@
-﻿using Infrastructure;
+﻿using System.Diagnostics.CodeAnalysis;
+using Infrastructure;
 using Infrastructure.Data;
 using MongoDB;
 using MongoDB.Configuration;
 
 namespace Data.MongoDb
 {
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+        Justification = "Type is not visible outside the assembly and UnitOfWork lifecycle is managed by the caller")]
     internal sealed class MongoUnitOfWorkFactory : IUnitOfWorkFactory
     {
         private readonly Mongo _mongo;

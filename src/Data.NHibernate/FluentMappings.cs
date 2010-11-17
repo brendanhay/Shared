@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using FluentNHibernate.Cfg;
 using Data.NHibernate.Conventions;
+using FluentNHibernate.Cfg;
 
 namespace Data.NHibernate
 {
