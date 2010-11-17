@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Data.Configuration;
 using Infrastructure;
 using Infrastructure.Data;
 

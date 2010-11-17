@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBootstrapper.cs" />
-    <Compile Include="ProviderConfiguration.cs" />
+    <Compile Include="Configuration\DatastoreConfiguration.cs" />
+    <Compile Include="Configuration\DatastoreConfigurationCollection.cs" />
+    <Compile Include="Configuration\ProviderConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWorkProxy.cs" />
     <Compile Include="UnitOfWorkCache.cs" />
