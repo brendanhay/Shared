@@ -76,7 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NHibernateRepository.cs" />
     <Compile Include="AuditEventListener.cs" />
-    <Compile Include="SessionFactory.cs" />
     <Compile Include="NHibernateUnitOfWork.cs" />
     <Compile Include="Conventions\TableNameConvention.cs" />
   </ItemGroup>

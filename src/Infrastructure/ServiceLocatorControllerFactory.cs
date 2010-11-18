@@ -20,7 +20,7 @@ namespace Infrastructure
 
             try {
                 controller = _locator.Get<IController>(key);
-            } catch (InvalidOperationException) {
+            } catch (Exception ex) {
                 controller = base.CreateController(requestContext, controllerName);
             }
 
