@@ -4,32 +4,19 @@ using System.Linq;
 using System.Net;
 using System.Security.Principal;
 using System.Web;
-using Infrastructure.Extensions;
+using Infrastructure.Domain;
 
 namespace Infrastructure.Audits
 {
-    public abstract class AuditableEntity<T>
-        : Entity, IAudit, IAuditable<T> where T : IAudit, new()
+    public abstract class AuditableEntity<T, TAudit> : Entity, IAuditable<TAudit>
+        where TAudit : IAudit<T>, new()
+        where T : class, IEntity
     {
-        private readonly IList<T> _audits = new List<T>();
-
-        #region IAudit
-
-        int IAudit.AuditId { get; set; }
-
-        string IAudit.AuditUser { get; set; }
-
-        AuditAction IAudit.Action { get; set; }
-
-        DateTime IAudit.Time { get; set; }
-
-        byte[] IAudit.IPv4Address { get; set; }
-
-        #endregion
+        private readonly IList<TAudit> _audits = new List<TAudit>();
 
         #region IAuditable<T> Members
 
-        public virtual IList<T> Audits { get { return _audits; } }
+        public virtual IList<TAudit> Audits { get { return _audits; } }
 
         #endregion
 
@@ -47,14 +34,13 @@ namespace Infrastructure.Audits
 
         IAudit IAuditable.CreateAudit(AuditAction action)
         {
-            var audit = new T {
+            var audit = new TAudit {
                 Action = action,
                 Time = DateTime.Now,
                 AuditUser = GetCurrentIdentity().Name,
-                IPv4Address = GetCurrentIPv4Address()
+                IPv4Address = GetCurrentIPv4Address(),
+                Entity = this as T
             };
-
-            this.Extend(audit, 1);
 
             Audits.Add(audit);
 

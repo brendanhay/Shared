@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Infrastructure.Domain;
 
 namespace Infrastructure.Data
 {
-    public interface IRepository<T> : IQueryable<T>
+    public interface IRepository<T> : IQueryable<T> where T : IAggregate
     {
         void Add(T item);
 

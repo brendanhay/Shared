@@ -23,7 +23,9 @@ namespace Infrastructure
             _path = path.Remove(index, path.Length - index).Split('/').Last();
 
             // Razor templates are hardcoded for now
-            _path += ".cshtml";
+            if (!_path.EndsWith(".cshtml")) {
+                _path += ".cshtml";
+            }
         }
 
         public override Stream Open()

@@ -2,16 +2,16 @@
 
 namespace Data.Configuration
 {
-    internal sealed class DatastoreConfigurationCollection : ConfigurationElementCollection
+    internal sealed class DatastoreCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()
         {
-            return new DatastoreConfiguration();
+            return new Datastore();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((DatastoreConfiguration)element).UnitOfWorkFactory;
+            return ((Datastore)element).UnitOfWorkFactory;
         }
     }
 }

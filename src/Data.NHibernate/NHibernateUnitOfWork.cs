@@ -2,6 +2,7 @@
 using System.Data;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Domain;
 using NHibernate;
 
 namespace Data.NHibernate
@@ -51,7 +52,7 @@ namespace Data.NHibernate
 
         #region IRepositoryFactory
 
-        public IRepository<T> Repository<T>() where T : class
+        public IRepository<T> Repository<T>() where T : class, IAggregate
         {
             return new Repository<T>(_session);
         }

@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Infrastructure;
 using Infrastructure.Data;
 
 namespace Data
 {
-    internal sealed class UnitOfWorkFactoryProxy : IUnitOfWorkFactoryProxy
+    internal sealed class UnitOfWorkFactoryProxy : IUnitOfWorkFactory
     {
         private readonly IDictionary<DatastoreType, IUnitOfWorkFactory> _factories;
 
-        public UnitOfWorkFactoryProxy(params IUnitOfWorkFactory[] factories)
+        public UnitOfWorkFactoryProxy(IEnumerable<IUnitOfWorkFactory> factories)
         {
             _factories = factories.ToDictionary(factory => factory.Datastore, factory => factory);
 
@@ -27,6 +26,10 @@ namespace Data
             }
         }
 
+        public DatastoreType Datastore
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope",
             Justification = "UnitOfWork lifecycle is managed by the caller")]
@@ -38,9 +41,11 @@ namespace Data
         }
 
 #if DEBUG
-        void IUnitOfWorkFactoryProxy.Rebuild(DatastoreType datastore)
+        void IUnitOfWorkFactory.Rebuild()
         {
-            GetFactory(datastore).Rebuild();
+            foreach (var datastore in _factories.Keys) {
+                GetFactory(datastore).Rebuild();
+            }
         }
 #endif
 

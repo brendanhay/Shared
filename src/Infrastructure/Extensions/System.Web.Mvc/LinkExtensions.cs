@@ -1,42 +1,51 @@
-﻿using System.Linq;
-using System.Web.Mvc.Html;
+﻿using System.Web.Mvc.Html;
+using System.Web.Routing;
 using Infrastructure.Constants;
+using Infrastructure.Extensions;
 
 namespace System.Web.Mvc
 {
     public static class LinkExtensions
     {
-        public static MvcHtmlString ActionTab(this HtmlHelper self, string text, string action,
-            string controller, object routeValues = null, bool matchOnControllerOnly = false)
+        public static MvcHtmlString ActionTab(this HtmlHelper self, string url, string text)
         {
-            return self.ActionTab(text, new[] { action }, controller, routeValues,
-                matchOnControllerOnly);
+            var current = HttpContext.Current.Request.Url;
+            var tag = new TagBuilder("a") {
+                InnerHtml = text
+            };
+            tag.Attributes.Add("href", url);
+
+            if (current.AbsolutePath.StartsWith(url)) {
+                tag.AddCssClass(Css.CURRENT_CLASS);
+            }
+
+            return MvcHtmlString.Create(tag.ToString());
         }
 
-        public static MvcHtmlString ActionTab(this HtmlHelper self, string text, string[] actions,
-            string controller, object routeValues = null, bool matchOnControllerOnly = false)
+        public static MvcHtmlString ActionTab(this HtmlHelper self, string text, string action,
+            string controller, string area, bool controllerOnly = false, bool areaOnly = false)
         {
-            var route = self.ViewContext.RequestContext.RouteData;
+            var route = self.ViewContext.RouteData;
             var current = new {
+                Area = route.DataTokens["area"] ?? "",
                 Controller = route.GetRequiredString("controller"),
                 Action = route.GetRequiredString("action")
             };
 
             var attributes = new object();
 
-            if (current.Controller.Equals(controller, StringComparison.OrdinalIgnoreCase)) {
-                if (matchOnControllerOnly || AnyActionsMatch(current.Action, actions)) {
+            if (areaOnly && area.EqualsIgnoreCase(current.Area.ToString())) {
+                attributes = new { @class = Css.CURRENT_CLASS };
+            }
+
+            if (current.Controller.EqualsIgnoreCase(controller)) {
+                if (controllerOnly || current.Action.EqualsIgnoreCase(action)) {
                     attributes = new { @class = Css.CURRENT_CLASS };
                 }
             }
 
-            return self.ActionLink(text, actions[0], controller, routeValues, attributes);
-        }
-
-        private static bool AnyActionsMatch(string currentAction, string[] actions)
-        {
-            return actions.Any(action => action.Equals(currentAction, 
-                StringComparison.OrdinalIgnoreCase));
+            return self.ActionLink(text, action, controller,
+                new RouteValueDictionary(new { area }), attributes);
         }
     }
 }

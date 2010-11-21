@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Domain;
 using MongoDB;
 
 namespace Data.MongoDb
@@ -24,7 +25,7 @@ namespace Data.MongoDb
             _mongo.Dispose();
         }
 
-        public IRepository<T> Repository<T>() where T : class
+        public IRepository<T> Repository<T>() where T : class, IAggregate
         {
             return new MongoRepository<T>(_mongo.GetDatabase("test"));
         }

@@ -1,8 +1,11 @@
-﻿using System.Reflection;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -35,12 +38,14 @@ namespace Data.NHibernate
             var configuration = Configure();
             var schema = new SchemaExport(configuration);
 
+            schema.SetOutputFile(GetSchemaFileName());
+
             schema.Drop(false, true);
-            schema.Create(false, true);
+            schema.Create(true, true);
         }
 #endif
 
-        internal Configuration Configure()
+        private Configuration Configure()
         {
             var listeners = new[] { new AuditEventListener() };
 
@@ -50,6 +55,17 @@ namespace Data.NHibernate
                 .ExposeConfiguration(config => config.EventListeners.PreUpdateEventListeners = listeners)
                 .ExposeConfiguration(config => config.EventListeners.PreInsertEventListeners = listeners)
                 .BuildConfiguration();
+        }
+
+        private static string GetSchemaFileName()
+        {
+            var current = Assembly.GetExecutingAssembly().CodeBaseDirectory();
+            var parent = Path.GetDirectoryName(current) ?? "";
+            var directory = Path.Combine(parent, "data", "nhibernate");
+
+            Directory.CreateDirectory(directory);
+
+            return Path.Combine(directory, DateTime.Now.ToTimeStamp() + ".sql");
         }
     }
 }

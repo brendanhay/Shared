@@ -39,10 +39,10 @@ namespace Data.Configuration
         }
 
         [ConfigurationProperty("datastores", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(DatastoreConfigurationCollection), AddItemName = "datastore")]
-        public DatastoreConfigurationCollection Datastores
+        [ConfigurationCollection(typeof(DatastoreCollection), AddItemName = "datastore")]
+        public DatastoreCollection Datastores
         {
-            get { return (DatastoreConfigurationCollection)this["datastores"]; }
+            get { return (DatastoreCollection)this["datastores"]; }
             set { this["datastores"] = value; }
         }
     }

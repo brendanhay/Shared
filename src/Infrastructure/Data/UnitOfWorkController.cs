@@ -1,21 +1,20 @@
-﻿using System.Web.Mvc;
-
-namespace Infrastructure.Data
+﻿namespace Infrastructure.Data
 {
-    public abstract class UnitOfWorkController : Controller
+    public abstract class UnitOfWorkController : ModelBindingController
     {
-        protected readonly IUnitOfWorkFactoryProxy _proxy;
+        protected readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         private IUnitOfWork _unitOfWork;
 
-        protected UnitOfWorkController(IUnitOfWorkFactoryProxy proxy)
+        protected UnitOfWorkController(IUnitOfWorkFactory unitOfWorkFactory, 
+            params ILocatableModelBinder[] binders) : base(binders)
         {
-            _proxy = proxy;
+            _unitOfWorkFactory = unitOfWorkFactory;
         }
 
         public IUnitOfWork UnitOfWork
         {
-            get { return _unitOfWork ?? (_unitOfWork = _proxy.Create()); }
+            get { return _unitOfWork ?? (_unitOfWork = _unitOfWorkFactory.Create()); }
         }
     }
 }
