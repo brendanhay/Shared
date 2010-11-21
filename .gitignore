@@ -12,6 +12,7 @@ _ReSharper*
 *.cache
 ~$*
 *.queue
+*.pidb
 *.db
 *.sdf
 *.0
