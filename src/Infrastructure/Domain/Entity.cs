@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure
+namespace Infrastructure.Domain
 {
     public interface IEntity
     {
@@ -10,6 +10,6 @@ namespace Infrastructure
     public abstract class Entity : IEntity
     {
         [Key]
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
     }
 }

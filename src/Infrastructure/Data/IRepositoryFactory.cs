@@ -1,9 +1,9 @@
-﻿using Infrastructure.Data;
+﻿using Infrastructure.Domain;
 
-namespace Infrastructure
+namespace Infrastructure.Data
 {
     public interface IRepositoryFactory
     {
-        IRepository<T> Repository<T>() where T : class;
+        IRepository<T> Repository<T>() where T : class, IAggregate;
     }
 }

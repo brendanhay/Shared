@@ -66,8 +66,13 @@ namespace Infrastructure.Collections
 
         private static Func<T, bool> StartsWith(char start, Func<T, string> selector)
         {
-            return item => selector(item).StartsWith(start.ToString(),
-                StringComparison.OrdinalIgnoreCase);
+            return item => {
+                var prefix = selector(item);
+
+                return string.IsNullOrEmpty(prefix)
+                    ? false
+                    : prefix.StartsWith(start.ToString(), StringComparison.OrdinalIgnoreCase);
+            };
         }
     }
 }

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Infrastructure.Data;
+using Infrastructure.Domain;
 using MongoDB;
 
 namespace Data.MongoDb
 {
-    internal sealed class MongoRepository<T> : IRepository<T> where T : class
+    internal sealed class MongoRepository<T> : IRepository<T> where T : class, IAggregate
     {
         private const string ID_COLUMN = "_id";
 

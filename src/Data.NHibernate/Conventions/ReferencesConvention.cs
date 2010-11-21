@@ -8,7 +8,7 @@ namespace Data.NHibernate.Conventions
     {
         public void Apply(IManyToOneInstance instance)
         {
-            instance.Cascade.None();
+            instance.Cascade.All();
             instance.Not.Nullable();
             instance.Column(NamingHelper.GetPrefixedName(instance.Property.PropertyType) + "_id");
             instance.ForeignKey(string.Format("fk_{0}_{1}",

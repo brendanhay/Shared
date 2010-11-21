@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure
+namespace Infrastructure.Data
 {
     public interface IUnitOfWork : IRepositoryFactory, IDisposable
     {

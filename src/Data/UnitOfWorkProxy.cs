@@ -1,5 +1,5 @@
-﻿using Infrastructure;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
+using Infrastructure.Domain;
 
 namespace Data
 {
@@ -36,8 +36,8 @@ namespace Data
         #endregion
 
         #region IRepositoryFactory
-        
-        public IRepository<T> Repository<T>() where T : class
+
+        public IRepository<T> Repository<T>() where T : class, IAggregate
         {
             return _cache.Get<T>().Repository<T>();
         }

@@ -18,24 +18,20 @@ namespace Data
 
         internal static void Setup(IServiceLocator locator, ProviderConfiguration config)
         {
-            foreach (Datastore datastore in config.Datastores) {
-                RegisterFactory(locator, datastore);
-            }
+            var factories = config.Datastores.Cast<Datastore>().Select(LoadFactory);
+            var proxy = new UnitOfWorkFactoryProxy(factories);
 
-            locator.Add<IUnitOfWorkFactoryProxy, UnitOfWorkFactoryProxy>(false);
+            locator.Inject<IUnitOfWorkFactory>(proxy);
         }
 
-        private static void RegisterFactory(IServiceLocator locator,
-            Datastore datastore)
+        private static IUnitOfWorkFactory LoadFactory(Datastore datastore)
         {
             var type = Type.GetType(datastore.UnitOfWorkFactory, LoadAssembly,
                 (assembly, name, insensitive) => assembly.GetType(name, true, insensitive));
 
             var factory = LoadFactory(type, datastore);
 
-            if (factory != null) {
-                locator.Inject(datastore.UnitOfWorkFactory, factory);
-            }
+            return factory;
         }
 
         private static IUnitOfWorkFactory LoadFactory(Type type, Datastore datastore)

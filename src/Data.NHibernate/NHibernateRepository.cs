@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Infrastructure.Data;
+using Infrastructure.Domain;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
 namespace Data.NHibernate
 {
-    internal sealed class Repository<T> : IRepository<T>
+    internal sealed class Repository<T> : IRepository<T> where T : IAggregate
     {
         private readonly ISession _session;
         private readonly INHibernateQueryable<T> _queryable;

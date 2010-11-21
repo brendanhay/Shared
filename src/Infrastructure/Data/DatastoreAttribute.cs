@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure
+namespace Infrastructure.Data
 {
     /// <summary>
     /// Signals to the data layer where classes annotated with 
