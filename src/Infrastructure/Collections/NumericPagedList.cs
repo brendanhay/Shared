@@ -21,7 +21,7 @@ namespace Infrastructure.Collections
 
     public interface INumericPagedList<T> : INumericPagedList, IList<T> { }
 
-    internal sealed class NumericPagedList<T> : List<T>, INumericPagedList<T>
+    public sealed class NumericPagedList<T> : List<T>, INumericPagedList<T>
     {
         public NumericPagedList(IQueryable<T> source, int pageIndex, int pageSize)
         {

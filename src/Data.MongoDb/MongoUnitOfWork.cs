@@ -1,7 +1,7 @@
-﻿using Infrastructure;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
 using Infrastructure.Domain;
 using MongoDB;
+using MongoDB.Configuration;
 
 namespace Data.MongoDb
 {
@@ -9,9 +9,15 @@ namespace Data.MongoDb
     {
         private readonly IMongo _mongo;
 
-        public MongoUnitOfWork(IMongo mongo)
+        public MongoUnitOfWork(string connection)
         {
-            _mongo = mongo;
+            var builder = new MongoConfigurationBuilder();
+
+            builder.ConnectionString(connection);
+            builder.Mapping(m => m.DefaultProfile(profile => profile
+                .UseIdUnsavedValueConvention(new UnsavedIdConvention())));
+
+            _mongo = new Mongo(builder.BuildConfiguration());
             _mongo.Connect();
         }
 

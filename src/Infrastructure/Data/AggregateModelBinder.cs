@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Infrastructure.Domain;
 
 namespace Infrastructure.Data
@@ -7,7 +8,7 @@ namespace Infrastructure.Data
     public class AggregateModelBinder<T> : DefaultModelBinder, ILocatableModelBinder
         where T : class, IAggregate, new()
     {
-        public Type Type { get { return typeof(T); } }
+        public virtual Type Type { get { return typeof(T); } }
 
         protected override object CreateModel(ControllerContext controllerContext,
             ModelBindingContext bindingContext, Type modelType)
@@ -18,11 +19,19 @@ namespace Infrastructure.Data
                 throw new NotSupportedException("Only Controllers derived from UnitOfWorkController are supported.");
             }
 
-            var id = Convert.ToInt32(controller.RouteData.GetRequiredString("id"));
+            var id = GetId(controller.RouteData);
 
-            return id > 0
-                ? controller.UnitOfWork.Repository<T>().Get(id)
-                : new T();
+            return controller.UnitOfWork.Repository<T>().Get(id);
+        }
+
+        protected virtual object GetId(RouteData routeData)
+        {
+            return ConvertId(routeData.GetRequiredString("id"));
+        }
+
+        protected virtual object ConvertId(string id)
+        {
+            return Convert.ToInt32(id);
         }
     }
 }

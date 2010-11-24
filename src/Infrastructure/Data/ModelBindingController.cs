@@ -6,6 +6,8 @@ namespace Infrastructure.Data
     {
         protected ModelBindingController(params ILocatableModelBinder[] binders)
         {
+            Binders.Clear();
+
             foreach (var binder in binders) {
                 Binders.Add(binder.Type, binder);
             }

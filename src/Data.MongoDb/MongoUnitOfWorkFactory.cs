@@ -1,46 +1,39 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Infrastructure;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
 using MongoDB;
-using MongoDB.Configuration;
 
 namespace Data.MongoDb
 {
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
-        Justification = "Type is not visible outside the assembly and UnitOfWork lifecycle is managed by the caller")]
     internal sealed class MongoUnitOfWorkFactory : IUnitOfWorkFactory
     {
-        private readonly Mongo _mongo;
+        private readonly string _connection;
 
         public MongoUnitOfWorkFactory(string connection)
         {
-            var builder = new MongoConfigurationBuilder();
-
-            builder.ConnectionString(connection);
-            builder.Mapping(m => m.DefaultProfile(profile => profile
-                .UseIdUnsavedValueConvention(new UnsavedIdConvention())));
-
-            _mongo = new Mongo(builder.BuildConfiguration());
+            _connection = connection;
         }
 
         public DatastoreType Datastore { get { return DatastoreType.Document; } }
 
         public IUnitOfWork Create()
         {
-            return new MongoUnitOfWork(_mongo);
+            return new MongoUnitOfWork(_connection);
         }
 
 #if DEBUG
         void IUnitOfWorkFactory.Rebuild()
         {
-            _mongo.Connect();
+            using (var mongo = new Mongo(_connection)) {
+                mongo.Connect();
 
-            var selector = new Document();
+                var selector = new Document();
 
-            foreach (var database in _mongo.GetDatabases()) {
-                foreach (var collection in database.GetCollectionNames()) {
-                    database.GetCollection(collection).Remove(selector);
+                foreach (var database in mongo.GetDatabases()) {
+                    foreach (var collection in database.GetCollectionNames()) {
+                        database.GetCollection(collection).Remove(selector);
+                    }
                 }
+
+                mongo.Disconnect();
             }
         }
 #endif
