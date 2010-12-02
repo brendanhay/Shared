@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AjaxOnlyAttribute.cs" />
     <Compile Include="ActionFilters\CacheAttribute.cs" />
     <Compile Include="ActionFilters\CompressAttribute.cs" />
     <Compile Include="ActionFilters\LayoutAttribute.cs" />

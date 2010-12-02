@@ -20,13 +20,20 @@ namespace Infrastructure.ActionFilters
                 return;
             }
 
+            var cache = filterContext.HttpContext.Response.Cache;
+
+#if DEBUG
+            cache.SetLastModified(DateTime.Now);
+            cache.SetNoStore();
+            cache.SetCacheability(HttpCacheability.NoCache);
+#else
             var cacheDuration = TimeSpan.FromSeconds(Duration);
 
-            var cache = filterContext.HttpContext.Response.Cache;
             cache.SetCacheability(HttpCacheability.Public);
             cache.SetExpires(DateTime.Now.Add(cacheDuration));
             cache.SetMaxAge(cacheDuration);
             cache.AppendCacheExtension("must-revalidate, proxy-revalidate");
+#endif
         }
     }
 }

@@ -3,7 +3,7 @@
     public static class DirectoryPaths
     {
         public const string STYLESHEETS = "compiled/stylesheets",
-            JAVASCRIPTS = "compiled/javascripts",
+            JAVASCRIPTS = "javascripts",
             IMAGES = "images",
             ICONS = "images/icons";
     }

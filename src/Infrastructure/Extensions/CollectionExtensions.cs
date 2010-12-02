@@ -1,11 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Web.Mvc;
 
 namespace Infrastructure.Extensions
 {
     public static class CollectionExtensions
     {
+        public static string Format(this IDictionary<string, ModelState> self)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var pair in self) {
+                builder.Append(pair.Key).Append(": ");
+                FormatModelState(builder, pair.Value);
+            }
+
+            return builder.ToString();
+        }
+
+        private static void FormatModelState(StringBuilder builder, ModelState modelState)
+        {
+            var count = 0;
+
+            foreach (var error in modelState.Errors) {
+                builder.Append(error.ErrorMessage).Append(", ");
+
+                count++;
+            }
+
+            if (count > 0) {
+                builder.Length -= 2;
+            }
+        }
+
         public static void AddRange<T>(this IList<T> self, IEnumerable<T> enumerable)
         {
             foreach (var item in enumerable) {
@@ -18,17 +47,8 @@ namespace Infrastructure.Extensions
             return self == null || self.Count < 1;
         }
 
-
         public static IEnumerable<IEnumerable<T>> Partition<T>(this IEnumerable<T> enumerable, int partitionSize)
         {
-            /*
-            return enumerable
-                .Select((item, index) => new { Item = item, Index = index, })
-                .GroupBy(item => item.Index / partitionSize)
-                .Select(group => group.Select(item => item.Item)                )
-                ;
-            */
-
             return new PartitioningEnumerable<T>(enumerable, partitionSize);
         }
 
@@ -53,7 +73,6 @@ namespace Infrastructure.Extensions
                 return GetEnumerator();
             }
         }
-
 
         private class PartitioningEnumerator<T> : IEnumerator<IEnumerable<T>>
         {
@@ -103,7 +122,6 @@ namespace Infrastructure.Extensions
 
                 return result;
             }
-
         }
 
         private class PartitionEnumerable<T> : IEnumerable<T>
@@ -128,7 +146,6 @@ namespace Infrastructure.Extensions
             }
         }
 
-
         private class PartitionEnumerator<T> : IEnumerator<T>
         {
             private readonly IEnumerator<T> _enumerator;
@@ -142,18 +159,18 @@ namespace Infrastructure.Extensions
                 _partitionSize = partitionSize;
             }
 
-            public void Dispose()
-            {
-            }
+            public void Dispose() { }
 
             public T Current
             {
                 get { return _enumerator.Current; }
             }
+
             object IEnumerator.Current
             {
                 get { return _enumerator.Current; }
             }
+
             public void Reset()
             {
                 if (_count > 0) throw new InvalidOperationException();

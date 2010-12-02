@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.Compression;
 using System.Web.Mvc;
 
 namespace Infrastructure.ActionFilters
@@ -9,6 +8,7 @@ namespace Infrastructure.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+#if !DEBUG
             var request = filterContext.HttpContext.Request;
             var acceptEncoding = request.Headers["Accept-Encoding"];
 
@@ -27,6 +27,7 @@ namespace Infrastructure.ActionFilters
                 response.AppendHeader("Content-encoding", "deflate");
                 response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
             }
+#endif
         }
     }
 }
