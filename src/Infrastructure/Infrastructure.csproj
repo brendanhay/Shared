@@ -77,6 +77,7 @@
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\HttpRequestBaseExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Collections\HtmlAttributeDictionary.cs" />
     <Compile Include="Inflector.cs" />
     <Compile Include="InfrastructureBootstrapper.cs" />
-    <Compile Include="Collections\InterceptedList.cs" />
     <Compile Include="ResfultRoutingRazorViewEngine.cs" />
     <Compile Include="ServiceLocatorControllerFactory.cs" />
     <Compile Include="Data\IRepositoryFactory.cs" />

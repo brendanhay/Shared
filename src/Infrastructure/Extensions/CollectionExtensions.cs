@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
@@ -8,7 +9,7 @@ namespace Infrastructure.Extensions
 {
     public static class CollectionExtensions
     {
-        public static string Format(this IDictionary<string, ModelState> self)
+        public static string Format(this ModelStateDictionary self)
         {
             var builder = new StringBuilder();
 
@@ -35,16 +36,25 @@ namespace Infrastructure.Extensions
             }
         }
 
-        public static void AddRange<T>(this IList<T> self, IEnumerable<T> enumerable)
+        public static void AddRange<T>(this IList<T> self, IEnumerable<T> enumerable,
+            Action<T> callback = null)
         {
+            if (enumerable.IsNullOrEmpty()) {
+                return;
+            }
+
             foreach (var item in enumerable) {
+                if (callback != null) {
+                    callback(item);
+                }
+
                 self.Add(item);
             }
         }
 
-        public static bool IsNullOrEmpty<T>(this ICollection<T> self)
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> self)
         {
-            return self == null || self.Count < 1;
+            return self == null || !self.Any();
         }
 
         public static IEnumerable<IEnumerable<T>> Partition<T>(this IEnumerable<T> enumerable, int partitionSize)

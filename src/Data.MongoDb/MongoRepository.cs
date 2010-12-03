@@ -18,7 +18,7 @@ namespace Data.MongoDb
 
         public MongoRepository(IMongoDatabase database)
         {
-            _collection = database.GetCollection<T>(typeof(T).Name);
+            _collection = database.GetCollection<T>();
             _queryable = _collection.Linq();
         }
 
